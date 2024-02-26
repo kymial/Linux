@@ -1,0 +1,114 @@
+root 권한 접속
+su - root
+패스워드입력(1234)
+
+vim /etc /passwd : 계정 정보 파일
+
+
+SHA 알고리즘
+유닉스 시간 - 솔트값을 유닉스 시간을 기반으로 돌림
+랜덤값.
+
+damon : * : 19430 : 0 : 99999 : 7 : : : 
+
+계정명 : 비밀번호 : 유닉스시간 : MIN : MAX : WARNING :INACTIVE : EXPIRE
+
+- MIN :암호 변경 후 변경 할 수 없는 시간
+- Max : 해당 암호 최대 사용 허가 기간
+- WARNING : 만료 전 경고 보여주는 기간
+- INACTIVE : 만료된 후 로그인 가능한 기간
+- EXPIRE : 사용자 계정 만료 기간
+
+유닉스 32비트로 구성되어 있음
+시작 시간이 1970년 1월 1일
+
+2038년 1월 19일에 유닉스 시간이 문제를 일으킴
+
+useradd : 사용자 계정 생성
+useradd "사용자이름"
+
+/etc/skel : 홈디렉터리를 만들 때 기본적으로 세팅되는 파일들이 저장되는 곳
+
+useradd 옵션
+	- m : 홈디렉터리 생성
+	- u : uid 지정
+	- g : gid 지정
+	- D : 기본값 출력
+	- d : 홈 디렉터리 지정
+
+조합이 가능하다
+ex )
+useradd -u 2001 -g 3001 -m user5
+
+PK : Primary Key(기본키) UID
+	- 시스템이 구별하는 방법 
+FK : Foreign Key(외래키) GID
+
+usermod(user modify)(유저 수정)
+
+usermod 옵션
+	- u : uid 지정
+	- g : gid 지정
+	- d : 홈 디렉터리 수정
+	- l : 계정 이름 변경
+	- s : 로그인 쉘 수정
+
+
+
+패스워드 에이징 수정명령어
+chage(change age)
+
+chage -m 3 -E 2024-06-11 user2
+
+chage 옵션
+	- m : MIN 수정
+	- M : MAX 수정
+	- W : WARNING 수정
+	- I : INACTIVE 수정
+	- E : EXPIRE 수정(날짜로 지정)
+	
+계정 삭제하기
+id 1
+username ubuntu
+password 암호화
+email
+createdDate 계정 생성일
+updateDate 계정 마지막 수정일
+deleteDate 계정 삭제일
+
+리눅스는 실제 계정 정보를 삭제한다.
+userdel(user delete)
+userdel "계정이름: -> 홈디렉터리는 삭제가 안됨
+
+userdel -r "계정이름"
+
+uesrdel 옵션
+	-r : 홈디렉터리도 삭제
+
+로깅 (Logging)
+- 서버에서 어떤 작업을 하고 있는지 나타내는 글자
+
+로깅에 5가지 단계
+	Error -> Warn -> Info -> Debug -> Trace
+		- Error : 요청한 결과를 도출하지 못함 (빨간색 글자)
+		- warn : 요청한 결과 성공, 근데 불안함 (노란색 글자)
+		- Info ~ Trace 성공함.
+
+패키지 매니저
+apt is interacitve 경고 로그가 발생할 수 있음.
+
+grp /etc /group : 그룹 정보 파일
+root : x : 0 :
+그룹이름 : x : GID : 그룹맴버
+
+/etc/gshadow : 그룹 비밀번호 정보 파일
+
+ubuntu : ! : :
+그룹이름 : 그룹암호 : 관리자 : 그룹맴버
+
+sudo passwd root 
+passwd root > 비밀번호 변경 명령어
+
+sudo(super user do) : 관리자 권한으로 실행 (root 계정으로 실행)
+관리자 권한으로 실행할 수 있는 애들이 지정되어 있음.
+첫 생성 사용장 계정에는 sudo 권한으로 부여한다.
