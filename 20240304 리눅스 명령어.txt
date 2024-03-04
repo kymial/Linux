@@ -1,0 +1,201 @@
+- 복습 -
+
+jobs : 백 그라운드 실행확인 명령어
+fg : 백그라운드를 포그라운드로 전환
+
+ctrl + c : 포그라운드 취소
+kill : 백그라운드 취소 
+
+1. sleep 100 명령어를 포그라운드 프로세스로 실행한다. 실행 후 해당 프로세스를 종료한다.
+
+sleep 100
+ctrl + c
+
+2. sleep 100 명령어를 백그라운드 프로세스로 실행한다.
+
+sleep 100 &
+
+3. 백그라운드 프로세스로 실행중인 sleep 100 프로세스의 PID를 알아낸다.
+
+ps -a (pgrep "프로세서")
+
+4. 해당 PID를 사용하여 sleep 100 프로세스를 종료한다.
+
+kill -9 PID
+
+5. sleep 100 명령어를 포그라운드로 실행하고, 백그라운드로 전환한다.
+
+sleep 100
+ctrl + z
+
+6. 다시 포그라운드로 전환하고 종료한다.
+
+fg %1
+ctrl + c
+
+7. sleep 100 명령어를 1분뒤 백그라운드로 실행하도록 예약한다.
+
+at now +1 min(minute)
+sleep 100 &
+ctrl + d
+
+
+리눅스 명령어 예약방식
+at : 예약한 명령어 한번만 실행
+cron : 예약한 명령어 반복 실행
+
+
+네트워크
+
+"OSI 7계층" / "TCP/IP" / "DoD(미국국방부)"
+
+
+mac 주소 : 네트워크 장비 식별자
+IP 주소 : 호스트 식별자
+Port 번호 : 네트워크에서 프로세스 식별자
+
+IPv4 : 192.168.3.24
+		64억 명까지 가능
+IPv6 : fe80 ~
+		128bit라 엄청 많음
+		
+서브넷 마스크 : 넷 마스크
+
+192.168.3 / .101
+NetID	  / HostID
+
+넷마스크로 NetID 랑 HostID를 구별한다.
+
+255.255.255.0
+
+192.168.3.101
+
+게이트 웨이 : 공유기 주소
+
+포트번호 : 네트워크에서 프로세서 식별자
+어플리케이션 개발자가 설정할 수 있다.
+8080, 80(http) / 433(https) => 브라우저에서 웹 사이트 뛰우기 위한 프로세스에 사용되는 포트번호
+Known port(알려전 포트)
+
+포트 포워딩
+http, https : 프로토콜(약속)
+
+Public IP
+1.252.206.49
+: 인터넷 상에서 고유하게 식별되는 IP
+인터넷을 통해 다른 지역의 기기들과 통신 가능
+인터넷 서비스 제공자
+
+Private IP(Local IP)
+192.168.3.101
+: 공유기 등 내부에 네트워크 기기와 연결된 호스트 사이에서 식별되는 IP
+해당 IP로는 인터넷으로 직접 접근 불가능
+
+유동 IP
+동적으로 할당되는 IP 주소
+KT IP 3000만개 가지고 있음.
+대한민국에 필요한 IP 5000만개 필요
+사람들이 많을때 2500만개가 사용된다.
+지역마다 100만개씩 IP주소 할당.
+
+고정 IP
+고정적으로 할당되는 IP 주소
+서버 주소가 고정되어야 함.
+나중에 내가 웹 사이트를 만들었다면, 고정 IP 활당받아야 함.
+비용은 유동IP보다 비쌈
+
+
+NetworkManager <- 이게 편함
+ip
+
+sudo apt install network-manager
+sudo systemctl start NetworkManager.service
+
+systemctl status networkManager
+active 되어있는지 확인
+
+커넥션 만들기 명령어
+sudo nmcli con add type ethernet con-name test-net ifname enp0s3 ip4 10.2.2.15/24 gw4 10.0.2.2
+
+sudo nmcli con add => 커넥션 만들기 명령어
+type ethernet 	   => 유/무선 유선 : ethernet
+con-name test-net  => 커넥션명 지정
+ifname enp0s3 	   => 디바이스 명
+ip4 10.2.2.15/24   => ip 주소
+gw4 10.0.2.2	   => 게이트웨이
+
+192.168.3.101
+255.255.255.0
+10.0.2.15/24 => IP주소 / 넷마스크 길이
+
+10.0.2.15/16 => 255.255.0.0
+
+KT 네트워크
+=>
+공인 아이피
+1.252.206.49
+=>
+사설 아이피
+192.168.3.101 포트번호도 같이 보냄
+=> 포트번호로 먼저 VM 프로세스로 할당
+리눅스 VM 아이피
+10.0.2.15
+
+아이피 보기
+sudo ip addr show
+
+아이피 변경
+: sudo ip addr add 10.0.2.16/24 dev enp0s3
+
+아이피 삭제
+: sudo ip addr del 10.0.2.16/24 dev enp0s3
+
+라우터 확인
+ip route show
+
+아이피 라우터 추가
+
+ip route add IP주소1 via IP주소2 dev 장치명
+ex) sudo ip route add 10.0.2.16 via 10.0.2.2 dev enp0s3
+
+IP주소1로 접속했을 때 IP주소2로 라우팅 함
+
+포트번호 : 프로세스 관련(SSH, HTTP 통신 할때 사용)
+
+IP 주소 할당하기
+라우팅
+
+sudo apt install net-tools
+: route 설치
+
+route
+: 라우터 및 아이피 목록
+
+sudo route del -host "ip"
+: 아이피 삭제
+
+
+네트워크 단위
+Stream : 시작은 있는데 끝은 알 수 없음.
+		 크기가 굉장히 크다.
+
+Packet : 스트림을 잘게 나눈 단위.
+		 패킷으로 만드는 것을 segment
+-------------------------------------- 어플리케이션 개발자
+
+Frame : 패킷을 프레임으로 바꾸는 것을 incapsulation이라고 한다.
+
+
+aaabbbcccddd
+(몇번째 패킷인지(어디에 보낼건지(내가 누구인지(aaa))))
+
+a1 b2 c4 d4
+   2  3  4
+=> 1번이 안왔다고 재 호출
+
+3/4 hand-shaking
+3 hand-shaking
+
+UDP(단방향) / TCP(양방향)
+SSH 할 때 설명할 예정
+보안이랑 관련 있음.
