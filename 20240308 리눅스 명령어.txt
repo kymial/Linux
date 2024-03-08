@@ -1,0 +1,156 @@
+파일 시스템 & 디스크 관리
+
+fdisk -l : 현재 디스크 정보들
+fidsk /dev /sdb : 디스크 관리
+mkfs : 파일시스템 생성
+mount : 디스크 마운트
+
+HDD : 25G 2개
+저장해야할 파일 30g
+-> LVM
+
+PV(Physical Volume) - VG(Volume Group) - LV(Logical Volume)
+
+sdb2 10G
+sdc1 25G
+
+합치고 이름을 mylvm1 으로 설정
+
+
+PV 상태 확인 pvs(pvscan)
+VG 상태 확인 vgs(vgscan)
+LV 상태 확인 lvs(lvscan)
+
+
+파티션 sdc1 생성
+
+
+마운트 헤제
+umount /mnt/hdd2
+
+
+1. PV 생성
+sudo pvcreate /dev/'디스크이름'
+
+sudo pvcreate /dev/sdb2
+sudo pvcreate /dev/sdc1
+
+
+2. VG 생성 (myvg1)
+sudo vgcreate 'vg 이름' /dev/'디스크이름' /dev/'디스크이름'
+sudo vgextend 'vg 이름' /dev/'디스크이름' (추가)
+
+sudo vgcreate myvg1 /dev/sdb2
+sudo vgextend mybg1 /dev/sdc1
+or
+sudo vgcreate myvg1 /dev/sdb2 dev/sdc1
+
+
+3. VG 활성화
+sudo vgchange -a y mylvg1
+
+
+4. LV 생성(mylvm1)
+sudo lvcreate -l 100%FREE -n 'LV명' 'VG명'
+or
+sudo lvcreate -L 용량(GB,MB,KB) -n 'LV명' 'VG명'
+
+sudo lvcreate -l 100%FREE -n mylvm1 mylvg1
+
+
+5. lv에 파일시스템 생성
+mkfs.'파일시스템유형'/dev/'vg명'/'lv명'
+
+
+6. LV 마운트
+mount /dev/'vg명'/'lv명' /'마운트할 폴더'
+
+
+파이프 & 출력 리다이렉션
+| & > >>
+
+명령어 | 명령어2
+1234 -> 
+1234라는 출력값을 명령어2에 전달
+
+ls | grep express
+
+리눅스의 철학
+작은것은 아름답다
+
+출력 리다이렉션 종류
+1> 출력 리다이렉션
+2> 오류 리다이렉션
+
+작업 예약 명령어
+at : 정해진 시간에 한번 실행
+cron : 정해진 시간마다 반복 실행
+
+***** ls-ls
+매분마다 ls-l 명령어 실행
+
+03** 1 ls -;
+월요일 3시에 실행
+
+03-5**1
+월요일 3시부터 5시까지 한시간씩 실행
+
+인바운드 / 아웃바운드
+
+인바운드 : 들어오는 애들 통제
+아웃바운드 : 내보낼 곳 통제
+
+TCP / UDP
+
+1. 요청 준비
+2. 요청 준비 확인 완료
+3. 요청
+
+
+방화벽 기본 전략
+allow /deny
+
+ufc allow 포트번호 / 프로토콜
+
+내 ip만 5000번 포트 허용하기
+tcp
+
+
+방화벽 상태 확인
+sudo ufw status
+
+방화벽 추가
+sudo ufw allow from '아이피' to any port '포트'
+
+방화벽에 tcp 를 추가할것면
+
+sudo ufw allow from '아이피' to any port '포트' /tcp
+
+방화벽 삭제
+sudo delete ufw allow from '아이피' to any port '포트'
+
+or
+
+sudo ufw status numbered
+숫자 확인
+sudo ufw delete '숫자'
+
+
+서킷 스위칭 / 패킷 스위칭
+
+통신단위 : 패킷
+
+서킷 스위칭이란?
+통신동안 통신 경로를 독점적으로 사용한다.
+이 경로는 통신이 종료될 때까지 유지
+통신 중에 경로가 끊기지 않아서 데이터 전송의 신뢰성이 높다.
+주로 사용되는 곳은 전화 통화에서 사용된다.
+단점으로 경로를 독점적으로 사용하기 때문에 경로에 필요한 회선이 적으면 경로 활당을 못함.
+
+패킷스위칭이란?
+데이터를 패킷이라는 단위로 분할해서 전달.
+수신측은 패킷을 다시 조립한다.
+패킷에는 목적지 주소, 순서 정보 등이 포함
+필요할 때만 네트워크 리소르를 사용함.
+네트워크를 효율적으로 사용할 수 있다.
+단점으로 패킷이 손실이 일어날 수 있다.
