@@ -1,0 +1,194 @@
+원격 접속 프로그램
+telnet / ssh
+오늘은 telnet
+
+파일 전송 프로토콜
+FTP
+
+서버 - 원격접속 당할 애 (xinetd, telnetd)
+
+클라이언트 - 원격접속 할 애 (telnet 클라이언트)
+
+오라클 설정
+=>
+네트워크 
+=>
+고급 포워딩
+=>  호스트 ip : 자신의 ip 
+	호스트 포트 각자 (20, 21, 23) 
+	게스트 ip : 10.0.2.15
+	게스트 포트 각자 (20, 21, 23)
+	설정
+
+sudo apt install xinetd
+xinetd 설치
+=>
+sudo apt install telnetd
+telnetd 설치
+=>
+sudo vim /etc/xinetd.d/telnet
+telnet 설정 열기
+=>
+service telnet
+{
+        disable = no
+        flags = REUSE  					# TCP (stream) / UDP (datagram)
+        socket_type = stream			# 동시접속자수
+        wait = no						#
+        user = root						# 누가 이 프로세서를 실행하냐?
+        server = /usr/sbin/in.telnetd	# 어떤 프로그램으로 실행하냐?
+        log_on_failure += USERID		# 
+
+}
+입력 후 저장
+=>
+sudo systemctl status xinetd
+=>
+active인지 확인
+=>
+sudo systemctl restart xinetd
+설정 적용을 위한 xinetd 재시작
+=>
+sudo systemctl status xinetd
+재시작 시간 확인하기
+=>
+sudo ufw status
+(방화벽 확인)
+=>
+sudo ufw allow telnet
+(방화벽 텔넷 추가)
+=>
+sudo ufw status
+(방화벽에 텔넷 추가되었는지 확인)
+
+
+1. 로컬(리눅스) 접속
+telnet (ifconfig 에서 나온 리눅스 아이피) 접속 확인
+
+2. 윈도우에서 접속
+윈도우 cmd에서 telnet(자신의 아이피) 접속 확인
+
+1. 패키지 설치
+2. xinetd 설정
+3. xinetd 재실행
+4. 텔넷 클라이언트 설치
+5. 방화벽 설정
+6. 원격 접속
+
+
+FTP : 원격 파일 송수신
+
+- 내가 한 방식 -
+
+service vsftpd status
+FTP가 설치되어있는지 확인
+=>
+sudo apt-get install vsftpd
+FTP 설치
+=>
+service vsftpd status
+FTP 상태 확인
+=>
+sudo ufw allow ftp
+방화벽 추가
+=>
+윈도우 cmd 창으로 이동
+=>
+ifconfig 으로 자신의 ip검색
+=>
+FTP
+=>
+open 아이피 연결 후
+=>
+우분투에 폴더를 만들고 ex) mkdir -r /home/ubuntu/test
+=>
+cmd로 돌아와서 cd "우분투 폴더 위치"(cd /home/ubuntu/test)
+=>
+pwd 위치 고정
+=>
+send 엔터
+로컬 파일 보낼 파일 위치 (D:\a\test.txt)
+원격 파일 보내서 저장할 파일 이름 (test)
+하고 엔터하면 보내짐
+
+만약 안되면
+
+1. 폴더 권한 주기
+
+sudo chown -R "계정" "폴더" (sudo chown -R ubuntu /home/ubuntu/test)
+
+2. FTP 설정 편집하기
+
+sudo vi /etc/vsftpd.conf //vsftpd.conf 입력 후
+
+# Uncomment this to enable any form of FTP write command.
+#write enable=YES
+위 항목 찾은 후, 아래 라인 주석 제거
+# Uncomment this to enable any form of FTP write command.
+write enable=YES
+
+그리고 FTP 서비스 재시작
+
+sudo /etc/init.d/vsftpd restart
+
+
+= 강사님이 설명하는 방법 =
+
+sudo apt install vsftpd
+FTP 설치
+=>
+sudo vim /etc/vsftpd.conf
+=>
+anonymous_enable = YES 로 변경
+#write_enable = YES를 write_enable = YES로 변경
+#local_umask=022 를 local_umask=022로 변경
+#anon_upload_enalbe = YES 를 anon_upload_enalbe = YES로 변경
+#anon_mkdir_write_enable = YES 를 anon_mkdir_write_enable = YES로 변경
+#chown_uploads = YES를 chown_uploads = YES로 변경
+#chown_username = who를 chown_username = ubuntu로 변경
+#xferlog_file=/ver/log/vsftpd.log 를 xferlog_file=/ver/log/vsftpd.log로 변경
+#xferlog_std_format=YES 를 xferlog_std_format=YES로 변경
+#idle_session_timeout=600 를 idle_session_timeout=600로 변경
+=>
+wq(저장후 나가기)
+=>
+sudo systemctl status vsftpd
+=>
+active인지 확인하기
+=>
+ftp 10.0.2.15로 우분투 내에서 접속 확인
+=>
+sudo ufw allow ftp
+방화벽 추가
+=>
+sudo ufw status
+방화벽 확인
+=>
+윈도우 cmd가서 ftp
+=>
+ftp)open 아이피 입력
+
+프론트 서버
+
+백앤드 서버
+
+파일 저장 서버 => FTP 서버로 대처 할 수 있음
+
+리펙토링 :
+기존코드를 수정하는 것(기능 수정 아님)
+=> 기능 수정없이 코드만 수정
+
+유지보수 하게된다면
+1. 기존 기능 수정없이
+2. 기능 추가
+3. 기능 삭제
+
+코딩을 하게되면
+작업을 하면 할수록 기능 하나 구현하는데 시간이 더 걸린다.
+
+프론트 리렉토링
+- 컴포넌트화
+
+백엔드 리렉토링
+- 코드 가시성 증가
+- 함수를 재사용할 수 있도록 커스텀
