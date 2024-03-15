@@ -1,0 +1,113 @@
+SSH / 메일송수신
+
+SSH
+:보안이 적용되어 있는 원격 접속 프로토콜
+
+보안의 3요소 (CIA)
+Confidentiality : 기밀성 -> 데이터의 암호화 :인가받은 사용자만 접근해야 한다.
+Intergrity : 무결성 : 인가한 방법으로만 데이터 변경 가능
+Availaility : 가용성 : 정보에 접근이 가능해야한다.
+
+RSA 보안 공식(공개키 비밀키)
+
+1. 비밀키와 공개키가 있다.
+2. 비밀키는 자신만 알고 잇따.
+3. 공개키는 모두가 다 알고 있다. 
+4. 비밀키로 잠근 데이터는 공개키로 열 수 있고.
+   공개키로 잠근 데이터는 비밀키로 열 수 있다.
+   
+기본 비밀키 보안 방식
+
+1. ssh 패키지
+2. ssh 접속 클라이언트(mobaXterm, putty)
+3. 접속
+
+오라클 버츄얼박스 설정
+->
+네트워크
+->
+고급
+->
+포트 포워딩에서 호스트 포트22, 게스트포트22 추가
+->
+리눅스에서 sudo apt-gpt install ssh 입력해서 패키지 설치
+->
+sudo systemctl status ssh 입력해서 액티브 상테인지 확인
+->
+sudo ufw allow ssh
+방화벽 제외 추가
+->
+sudo ufw status
+확인
+->
+mobaXterm 홈페이지 가서 설치
+->
+settings -> configuration -> default font settings
+->
+font charset DEFAULT (System)
+Term charset eucKR (Korean)
+세팅
+->
+session
+->
+SSH
+->
+Remote host : 아이피 입력
+Specify username : 우분투 아이디 입력
+후 로그인 끝
+
+
+기본 제공하는 메일 사용하기
+1. 메일 서버 동작 확인(telnet 10.0.2.15 25)
+2. 메일 명령어 (mailx)
+3. 메일 보내기 (ubuntu -> user1)
+4. 메일 보기 (user1)
+
+
+내가 지정한 도메인만 서버에 접근가능.
+
+CORS / CSRF
+
+CSRF 토큰 : 인가된 사용자가 정상적인 방법으로 요청하였는데 확인하는 토큰
+
+
+
+비밀번호 바꾸는 요청을 버튼 만듬 (스크립트 심어서 작동)
+피해자에게 내 주소를 보낸다.
+
+로그인방식
+세션(세션아이디) - 토큰(토큰자체)
+쿠키에 저장		 로컬 스토라지에 저장
+
+면접에서 자주 나오는 질문
+
+Spring Boot의 장점은? or Spring Framework의 장점이 무엇인가요?
+
+한국에서 자주 사용하는게
+
+Flask<- 이건 엄청 낮은 확률로 보임
+
+					Spring Vs node.js
+주로 사용하는 언어 	java	  javascript
+
+java는 타입이 있고 javascript타입이 없다.
+java는 컴파일에러가 뜨고 javascript런타임에러가 뜬다
+
+1. 자바 : 강력한 타입 시스템
+2. 다양한 서브 프로젝트가 많다. (예> Spring Boot, Spring Security, Spring Batch)
+3. 개발자의 권한을 스프링이 갖고 있다.
+
+Node.js
+1. 비동기 처리가 빠르다. (다중 사용자 일 경우 응답속도가 빠르다)
+2. 설명할게 적다.
+3. 실시간 데이터 처리가 빠르다. (실시간 채팅 앱, 게임 서버)
+4. 패키지랑 라이브러리가 훨씬 많다.
+5. 프론트 앤드하다가 백엔드 하려는데 자바부터 안배워도 된다.
+
+IOC Inversion Of Contoller
+스프링에서는 인스턴스 권하을 개발자로부터 뺏음.
+싱글톤으로 유지시킴
+
+컴파일 : 영어 -> 컴퓨터 언어 파일로 변경
+
+
