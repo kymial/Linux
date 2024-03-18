@@ -1,0 +1,83 @@
+Web Server
+
+
+WAS (Web Application Server)
+로그인한 화면 / 로그인 안 한 화면
+
+Web Server를 구축할 예정
+apache / nginx
+
+원격 접속 : telnet, ssh
+웹 : http, https
+
+HTTP 유럽에서 원자 시험
+논문을 각자 방에서 작성
+논문 공유 서버
+논문을 서버에 usb갖고가서 내 논문을 업로드.
+브라우저를 만들어서
+논문 이름을 치면 해당 논문이 나오게 설정
+
+body
+
+Request
+1. 어떤 것을 요청하는지(url)
+2. 요청한 사용자 정보(header)
+3. 쿠키(header)
+4. 기타 등등(header)
+5. 로그인할 때 아이디, 비밀번호(body)
+
+Response
+1. 응답한 시간 (header)
+2. 응답 상태.(header)
+3. 요청한 것 응답.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+POST body가 잇음
+PUT body가 있음.
+/book	POST
+/book/1 PUT
+
+Restful 하다
+@RestController에서 사요오디는 Rest
+
+Restful하지 않다.
+/book/1/update POST
+/book/create POST
+
+apache 서버
+1. apache 패키지 설치
+2. apache 세팅
+3. 간단한 페이지 설정(HTML)
+4. 포트포워딩(포트 번호 찾기)
+5. 웹 브라우저에 IP주소 쳐서 접속
+
+
+sudo service apache2 status
+아파치 상태 확인
+액티브 확인
+->
+sudo ufw allow http
+방화벽 추가
+->
+http://192.168.3.101/
+접속 되는지 확인
+->
+sudo cp index.html index-backup.html
+원본 백업
+->
+sudo rm index.html
+기본 html 삭제
+->
+sudo vi index.html
+html 추가
+->
+새로고침
+
+well-known port : 프로토콜에 사용되는 포트
+
+web server : 정적인 서버
+			  html 파일을 그대로 전달.
+
+was : 동적인 서버
+	  html 안에 html 코드가 아닌 다른코드가 들어가면
+	  
+Spring 
