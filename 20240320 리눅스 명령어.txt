@@ -1,0 +1,97 @@
+데이터베이스 : 데이터 모아놓은 것
+
+SQL (관계형 데이터베이스 구성 요소)
+NOSQL (
+
+관계형 데이터베이스 구성요소
+- 테이블
+	- 열(column, field)
+	- 행 (row, tuple, record)
+
+관계형 데이터베이스 연관관계
+- pk를 지정해주고
+- 다른 테이블에서 fk를 사용해서
+
+관계형 데이터베이스 종류
+mySQL, mariaDB, msSQL, PostgreSQL
+
+비관계 데이터베이스 종류
+MongoDB, Elasticsearch, Apache CouchDB
+
+MariaDB
+데이터베이스 / DBMS
+DBMS : 데이터베이스 관리 시스템
+
+테이블(table)
+데이터베이스(database)
+열(column)
+행(row)
+키(key)
+
+1. mariaDB 패키지 설치
+2. 리눅스에스 st_db 데이터베이스 만들기
+
+3. 학생 정보 테이블 만들기
+student_info_tb
+id int pk
+age int
+name char
+
+4. 학생 학점 테이블 만들기
+student_grade_tb
+id int pk
+student_id int fk
+grade int
+
+5. 데이터 집어넣기(insert)
+
+5. 데이터 조회하기
+
+통신할때 타입(Content-Type)
+json(javascript object notation)
+www-encoded-form-url(옛날거)
+xml(옛날거)
+
+MIME-Type
+json : application/json
+@RestController @RequestBody
+
+www-encoded-form-url
+@Controller
+
+xml : application/xml
+
+중간언어
+Server - 통신 - Client
+java	 json   dart
+
+자바리플렉션
+
+클래스
+생성자
+메서드
+필드
+어노테이션 정보들을 갖고 올 수 있따.
+
+
+Flutter Getlt <- 싱글톤을 위해서 사용해서
+				 스프링의 IOC 컨테이너 같은 개념
+
+디자인 패턴?
+프로그래밍 잘 하는 애들이 모여서 프래고르맹에서 자주 발생하는 문제를 해결하기 위해 공통된 설계 패턴을 정의하는 것
+
+브릿지 패턴
+
+팩토리메서드 패턴
+
+싱글톤 패턴
+- 전체 프로그램에서 단 하나의 인스턴스만 생성\
+- 이 인스턴스에 대한 전역적인 접근을 제공
+- 다른 객체들은 이 인스턴스를 참조하여 사용
+
+사용하는이유
+- 인스턴스를 여러 개 생성하면 문제가 발생하는 경우
+- 인스턴스 생성 후 해당 객체가 변경될 필요가 없는 경우
+
+어댑터 패턴
+- 인터페이스를 수정할 수 없는 경우
