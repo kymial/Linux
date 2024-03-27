@@ -1,0 +1,52 @@
+쉘 스크립트
+
+vim shell-script-test.sh
+
+sh :
+- 실행 명령어
+
+입력받은 텍스트를 출력 시키는 명령어를 찾아서
+i texted {hello}에서 {hello}에 입력받은 글자가 출력되게 만들어라
+
+vim 파일명.sh
+
+#!/bin/bash
+
+read hello
+echo "i texted ${hello}"
+
+
+sudoer 파일 수정
+
+로그 안뜨고 패키지 설치
+apt install -y "$test" > /dev/null
+
+
+Now, Time is 12: 18: 43. 표시
+=> echo "Now, Time is `date +%H` : `date +%M` : `date +%S`."
+
+date
+
+
+awk
+
+'' 내부에 텍스트를 문자열 자체로 인식
+"" 내부에 특수문자의 경우 변수나 명령어등으로 해석
+
+if문
+입력받은 문자열이 hello 같으면
+yes 출력
+다르면 no출력
+
+read a
+
+if [ "$a"  =  "hello" ];
+then
+        echo "yes"
+else
+        echo "no"
+fi
+
+변수명=변수값 O
+변수명 = 변수값 X
+; 사용 안됨(IF문 제외)
