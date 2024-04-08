@@ -1,0 +1,62 @@
+쉘 변수
+현재 셀에서만 사용이 가능하다.
+서브 쉘로는 전달되지 않는다.
+
+환경변수(전역변수)
+현재 쉘 뿐만 아니라 서브 쉘에서도 사용 가능.
+
+set : 환경변수 및 쉘 변수 출력
+env : 환경변수만 출력
+
+test-var를 환경변수로 변경시키기
+=> export 환경변수명
+
+test-var를 쉘 변수로 변경시키기
+=> export -n 환경변수명
+
+test-var 변수를 없애기
+unset
+
+1. openjdk-11 설치하기
+2. 타임존 서울로 세팅
+
+
+1. 소스코드를 코딩한다.
+2. 기계어로 변환한다.
+3. 실행파일로 컴퓨터가 실행
+
+1. 소스코드를 코딩한다.
+2. 빌드한다. (jar 파일이 생성된다.) 
+3. jar을 실행한다.
+
+빌드 실행법
+./gradlew build
+
+실행방법
+/aws-v2/build/libs 로 이동
+java -jar ./aws-v2-0.0.1.jar
+
+
+
+# git clone
+echo "try to clone a spring boot project from github"
+git clone https://github.com/NomadHuns/aws-v2.git
+echo "complete to clone the spring boot project"
+
+# gtant authority to gradlew
+chomd u+x ${HOME}/aws-V2/gradlew
+echo "done to grant authority to build files"
+
+# build jar file
+cd ${HOME}/aws-v2
+echo "try to build files"
+./gradlew clean build
+echo "complete to build files"
+
+# start to spring boot server
+echo "try to run server build file"
+nohup java -jar ./build/libs/aws-v2-0.0.1.jar 1>${HOME}/log.out 2>${HOME}/err.out &
+
+# TODO have to check server status constantly
+
+#
